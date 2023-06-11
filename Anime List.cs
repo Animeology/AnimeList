@@ -7,11 +7,9 @@ public class AnimeList
         Menu();
     }
 
-
     static void Menu()
     {
         int choice = 0;
-
         while (choice != 4)
         {
             Console.WriteLine("1. WatchList");
@@ -20,8 +18,6 @@ public class AnimeList
             Console.WriteLine("4. Quit");
 
             choice = Convert.ToInt32(Console.ReadLine());
-
-
             if (choice != 4)
             {
                 Console.WriteLine("Type the anime");
@@ -38,6 +34,7 @@ public class AnimeList
                         WatchedList(anime, file);
                         break;
                     case 3:
+                        DroppedList(anime, file);
                         break;
                     case 4:
                         break;
@@ -58,15 +55,23 @@ public class AnimeList
     static void WatchedList(string anime, string watchFile)
     {
         string doneFile = "DoneList.txt";
+        MoveAnimeNameToDifferentFile(anime, watchFile);
+        File.AppendAllText(doneFile, anime + Environment.NewLine);
+    }
 
+    static void DroppedList(string anime, string watchFile)
+    {
+        string dropFile = "DroppedList.txt";
+        MoveAnimeNameToDifferentFile(anime, watchFile);
+        File.AppendAllText(dropFile, anime + Environment.NewLine);
+    }
+    private static void MoveAnimeNameToDifferentFile(string anime, string watchFile)
+    {
         Regex regex = new Regex(anime);
-
         using (StreamWriter sw = new StreamWriter(watchFile))
         {
             string content = regex.Replace(anime, string.Empty);
             sw.Write(content);
         }
-
-        File.AppendAllText(doneFile, anime + Environment.NewLine);
     }
 }
