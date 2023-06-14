@@ -7,42 +7,6 @@ public class AnimeList
         Menu();
     }
 
-    static void Menu()
-    {
-        int choice = 0;
-        while (choice != 4)
-        {
-            Console.WriteLine("1. WatchList");
-            Console.WriteLine("2. Done/Watched");
-            Console.WriteLine("3. Dropped");
-            Console.WriteLine("4. Quit");
-
-            choice = Convert.ToInt32(Console.ReadLine());
-            if (choice != 4)
-            {
-                string file = "WatchList.txt";
-
-                switch (choice)
-                {
-                    case 1:
-                        WatchList(file);
-                        break;
-                    case 2:
-                        DoneList(file);
-                        break;
-                    case 3:
-                        DroppedList(file);
-                        break;
-                    case 4:
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice");
-                        Menu();
-                        break;
-                }
-            }
-        }
-    }
 
     static void WatchList(string file)
     {
@@ -60,25 +24,17 @@ public class AnimeList
     static void DoneList(string file)
     {
         string doneFile = "DoneList.txt";
-        ShowAnimeList(doneFile);
-
-        string anime = InputAnime();
-
-        DeleteAnimeName(anime, file);
-        bool inWatchList = CheckAnimeOnList(anime, file);
-        if (inWatchList)
-        {
-            bool inList = CheckAnimeOnList(anime, doneFile);
-            if (inList)
-            {
-                File.AppendAllText(doneFile, anime + Environment.NewLine);
-            }
-        }
+        MoveAnimeToDifferentFile(file, doneFile);
     }
 
     static void DroppedList(string file)
     {
         string dropFile = "DroppedList.txt";
+        MoveAnimeToDifferentFile(file, dropFile);
+    }
+
+    static void MoveAnimeToDifferentFile(string file, string dropFile)
+    {
         ShowAnimeList(dropFile);
 
         string anime = InputAnime();
@@ -147,6 +103,42 @@ public class AnimeList
                     Console.WriteLine("There is no anime in this list");
                 }
                 Console.WriteLine(line);
+            }
+        }
+    }
+    static void Menu()
+    {
+        int choice = 0;
+        while (choice != 4)
+        {
+            Console.WriteLine("1. WatchList");
+            Console.WriteLine("2. Done/Watched");
+            Console.WriteLine("3. Dropped");
+            Console.WriteLine("4. Quit");
+
+            choice = Convert.ToInt32(Console.ReadLine());
+            if (choice != 4)
+            {
+                string file = "WatchList.txt";
+
+                switch (choice)
+                {
+                    case 1:
+                        WatchList(file);
+                        break;
+                    case 2:
+                        DoneList(file);
+                        break;
+                    case 3:
+                        DroppedList(file);
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice");
+                        Menu();
+                        break;
+                }
             }
         }
     }
