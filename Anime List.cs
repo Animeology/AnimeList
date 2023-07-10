@@ -7,7 +7,6 @@ public class AnimeList
         Menu();
     }
 
-
     static void WatchList(string file)
     {
         ShowAnimeList(file);
@@ -106,6 +105,7 @@ public class AnimeList
             }
         }
     }
+
     static void Menu()
     {
         int choice = 0;
